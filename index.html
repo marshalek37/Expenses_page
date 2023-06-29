@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Expenses</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+      @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@300;500;800&display=swap');
+
+      html {
+        overflow-x: hidden;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: "Catamaran", sans-serif;
+        background-color: #f2f2f2;
+        margin: 0 1rem;
+
+        @media (max-width: 380px) {
+          transform: scale(0.9)
+        }
+      }
+
+      nav {
+
+        @media (min-width: 748px) {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      .nav {
+        display: flex ;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        max-width: 800px;
+      }
+
+      .nav__item {
+
+        @media (min-width: 748px) {
+          margin-right: 20px;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: #00ddc2;
+        font-weight: 800;
+        font-size: 0.8rem;
+        text-shadow: 0;
+        transition: .3s ease;
+
+        @media (min-width: 748px) {
+          font-size: 1.2rem;
+        }
+        
+      }
+
+      a:hover {
+        text-shadow: 0 0 15px;
+      }
+
+      ul {
+        list-style: none;
+        padding-inline-start: 0;
+      }
+
+      .title {
+        font-size: 1rem;
+      }
+
+      .expenses_box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .expense__item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 200px;
+        width: 200px;
+        background-color: #f2f2f2;
+        margin: 20px 20px 20px 0;
+        border: 1px solid #9a9a9a;
+        transition: background .3s ease;
+        padding: 1rem;
+      }
+
+      .expense__item:hover {
+        background: #00ddc2;
+        border: 1px solid rgba(0,221,194,.77);
+        box-shadow: 7px 7px 65px 1px rgba(0,221,194,.77);
+      }
+
+      .expense__item:hover .name {
+        color: #f2f2f2;
+      }
+
+      .expense__item:hover .date {
+        color: #f2f2f2;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-left: 20px;
+      }
+
+      .category {
+        color: #7a61fa;
+      }
+      
+      .category-1 {
+        color: #ef5ca3;
+      }
+
+      .name {
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      .price {
+        margin-top: 10px;
+      }
+
+      .date {
+        margin-top: 10px;
+        color: #9a9a9a;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 1rem 0;
+
+        @media (min-width: 768px) {
+          justify-content: center;
+          flex-direction: row;
+          padding: 1rem 0;
+        }
+      }
+
+      .form_section {
+        margin-right: 37px;
+        margin-bottom: 10px;
+
+        @media (min-width: 768px) {
+          margin-bottom: 0;
+          margin-right: 10px;
+        }
+      }
+
+      .form_section-1 {
+        margin-right: 20px;
+
+        @media (min-width: 768px) {
+          margin-right: 10px;
+        }
+      }
+
+      .form_section-2 {
+        margin-right: 39px;
+
+        @media (min-width: 768px) {
+          margin-right: 10px;
+        }
+      }
+
+      .form input::placeholder,
+      .form select::placeholder {
+        color: #9a9a9a;
+        font-weight: 500;
+        font-family: inherit;
+      }
+
+      .form input {
+        padding: 2px;
+        background-color: transparent;
+        border: 1px solid #9a9a9a;
+        font-weight: 500;
+        line-height: 14px;
+      }
+
+      .form input:focus-visible {
+        outline: 2px solid #00ddc2;
+      }
+
+      .range {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .label {
+        display: flex;
+        align-items: center;
+
+        @media (min-width: 768px) {
+          margin-right: 10px;
+          flex-direction: column;
+        }
+      }
+
+      .breaker {
+        margin: 0 4px;
+      }
+
+      .button {
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        background-color: #00ddc2;
+        border: 1px solid #9a9a9a;
+        height: 30px;
+        transition: background .3s ease;
+        width: 100%;
+
+        @media (min-width: 768px) {
+          max-width: 740px;
+        }
+      }
+
+      .button:hover {
+        background-color: #f2f2f2;
+        color: #00ddc2;
+      }
+
+      .button__wrapper {
+
+        @media (min-width: 768px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+      }
+
+      .select {
+        background: transparent;
+        margin-top: 1px;
+        height: 23.5px;
+      }
+
+      .search {
+        background: transparent;
+        margin-top: 1px;
+        height: 17.5px;
+      }
+
+      .sum {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .title {
+        @media (min-width: 768px) {
+          font-size: 1.4rem;
+          text-align: center;
+        }
+      }
+
+      .summary_box_period {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+
+        @media (min-width: 768px) {
+          margin-bottom: 60px;
+        }
+      }
+
+      .sum_period__item {
+        margin-right: 20px;
+        min-width: 60px;
+      }
+
+      .summary_box_category {
+        display: flex;
+        margin-bottom: 40px;
+      }
+
+      .sum_category__item {
+        margin-right: 20px;
+        min-width: 60px;
+      }
+
+      .title-low {
+        margin-right: 20px;
+      }
+
+      .summary_container {
+        display: flex;
+      }
+
+      
+    </style>
+  </head>
+    <body>
+      <aside>
+        <nav>
+          <ul class="nav">
+            <li class="nav__item"><a href="#">Dashboard</a></li>
+            <li class="nav__item"><a href="#">Reports</a></li>
+            <li class="nav__item"><a href="#">Expenses</a></li>
+            <li class="nav__item"><a href="#">Settings</a></li>
+            <li class="nav__item"><a href="#">Profile</a></li>
+            <li class="nav__item"><a href="#">Log out</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <section class="body">
+
+        <section class="expenses_box">
+
+          <h1 class="title">Expenses</h1>
+
+          <div class="form_wrapper">
+
+            <form id="filterForm" class="form">
+              <label class="label">
+                <span class="form_section">Period</span>
+                <span class="range">
+                  <input type="date" placeholder="Start Date">
+                  <span class="breaker">-</span>
+                  <input type="date" placeholder="End Date">
+                </span>
+              </label>
+            
+              <label class="label label-1">
+                <span class="form_section form_section-1">Category</span>
+                <select class="select" id="category">
+                  <option value="all" disabled selected hidden>Select a category</option>
+                  <option value="all">All</option>
+                  <option value="food">Food</option>
+                  <option value="car">Car</option>
+                </select>
+              </label>
+            
+              <label class="label label-2">
+                <span class="form_section form_section-2">Name</span>
+                <input class="search" type="text" placeholder="Specify your search">
+              </label>
+            </form>
+          </div>
+
+          <div class="button__wrapper">
+
+            <button 
+              id="filterButton"
+              class="button"
+              type="submit">Search for your result
+            </button>
+
+          </div>
+
+
+          <div class="items_container">
+          
+            <div class="container" id="expenseItemsContainer"></div>
+
+          </div>
+
+          <div id="paginationContainer"></div>
+
+        </section>
+
+        <section class="summary_box">
+
+          <div class="sum">
+
+            <h2>Summary</h2>
+
+            <h3 id="totalAmount">Total: 797 PLN</h3>
+          </div>
+
+          <section class="summary_box_period">
+
+            <h3 class="title-low title-low-1">Per period</h3>
+
+            <div class="summary_container" id="summaryItemsContainer"></div>
+
+          </section>
+
+          <section class="summary_box_category">
+
+            <h3 class="title-low">Per category</h3>
+
+            <div class="summary_container" id="summaryItemsContainer-1"></div>
+
+          </section>
+
+        </section>
+
+      </section>
+
+      <script>
+
+        const items = [
+          {
+            name: 'Coffee',
+            price: '40 PLN',
+            category: 'food',
+            date: '2022-07-16',
+            currency: 'PLN',
+          },
+          {
+            name: 'Bread',
+            price: '8 PLN',
+            category: 'food',
+            date: '2022-08-03',
+            currency: 'PLN',
+          },
+          {
+            name: 'Cheese',
+            price: '21 PLN',
+            category: 'food',
+            date: '2022-08-03',
+            currency: 'PLN',
+          },
+          {
+            name: 'Fuel',
+            price: '320 PLN',
+            category: 'car',
+            date: '2022-08-14',
+            currency: 'PLN',
+          },
+          {
+            name: 'Bread',
+            price: '8 PLN',
+            category: 'food',
+            date: '2022-09-01',
+            currency: 'PLN',
+          },
+          {
+            name: 'Ham',
+            price: '14 PLN',
+            category: 'food',
+            date: '2022-09-01',
+            currency: 'PLN',
+          },
+          {
+            name: 'Fuel',
+            price: '320 PLN',
+            category: 'car',
+            date: '2022-08-14',
+            currency: 'PLN',
+          },
+          {
+            name: 'Bread',
+            price: '8 PLN',
+            category: 'food',
+            date: '2022-09-01',
+            currency: 'PLN',
+          },
+          {
+            name: 'Ham',
+            price: '14 PLN',
+            category: 'food',
+            date: '2022-09-01',
+            currency: 'PLN',
+          },
+          {
+            name: 'Milk',
+            price: '5 PLN',
+            category: 'food',
+            date: '2022-10-10',
+            currency: 'PLN',
+          },
+          {
+            name: 'Eggs',
+            price: '12 PLN',
+            category: 'food',
+            date: '2022-10-10',
+            currency: 'PLN',
+          },
+          {
+            name: 'Gasoline',
+            price: '220 PLN',
+            category: 'car',
+            date: '2022-10-15',
+            currency: 'PLN',
+          },
+          {
+            name: 'Chicken',
+            price: '25 PLN',
+            category: 'food',
+            date: '2022-10-15',
+            currency: 'PLN',
+          },
+          {
+            name: 'Cereal',
+            price: '15 PLN',
+            category: 'food',
+            date: '2022-10-30',
+            currency: 'PLN',
+          },
+          {
+            name: 'Yogurt',
+            price: '7 PLN',
+            category: 'food',
+            date: '2022-10-30',
+            currency: 'PLN',
+          },
+          {
+            name: 'Engine Oil',
+            price: '50 PLN',
+            category: 'car',
+            date: '2022-10-30',
+            currency: 'PLN',
+          },
+          {
+            name: 'Salmon',
+            price: '30 PLN',
+            category: 'food',
+            date: '2022-11-05',
+            currency: 'PLN',
+          },
+          {
+            name: 'Vegetables',
+            price: '18 PLN',
+            category: 'food',
+            date: '2022-11-05',
+            currency: 'PLN',
+          },
+          {
+            name: 'Tire',
+            price: '200 PLN',
+            category: 'car',
+            date: '2022-11-05',
+            currency: 'PLN',
+          },
+          {
+            name: 'Orange Juice',
+            price: '12 PLN',
+            category: 'food',
+            date: '2022-11-15',
+            currency: 'PLN',
+          }
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let filteredItems = items;
+      
+        function renderItems(items) {
+          const container = document.getElementById('expenseItemsContainer');
+          container.innerHTML = '';
+
+          const startIndex = (currentPage - 1) * itemsPerPage;
+          const endIndex = startIndex + itemsPerPage;
+          const currentItems = items.slice(startIndex, endIndex);
+
+          currentItems.forEach(item => {
+            const expenseItem = document.createElement('div');
+            expenseItem.className = 'expense__item';
+
+            const name = document.createElement('div');
+            name.className = 'name';
+            name.textContent = item.name;
+            expenseItem.appendChild(name);
+
+            const price = document.createElement('div');
+            price.className = 'price';
+            price.textContent = item.price;
+            expenseItem.appendChild(price);
+
+            const category = document.createElement('div');
+            if (item.category === 'car') {
+              category.className = 'category';
+            } else if (item.category === 'food') {
+              category.className = 'category-1';
+            }
+            category.textContent = item.category;
+            expenseItem.appendChild(category);
+
+            const date = document.createElement('div');
+            date.className = 'date';
+            date.textContent = item.date;
+            expenseItem.appendChild(date);
+
+            container.appendChild(expenseItem);
+          });
+
+          renderPagination(items.length);
+        }
+
+        function renderPagination(totalItems) {
+          const paginationContainer = document.getElementById('paginationContainer');
+          paginationContainer.innerHTML = '';
+
+          const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+          for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+
+            button.style.padding = '5px 10px';
+            button.style.margin = '0 5px';
+            button.style.border = '1px solid #9a9a9a';
+            button.style.backgroundColor = 'transparent';
+            button.style.cursor = 'pointer';
+
+            button.addEventListener('click', () => {
+              currentPage = i;
+              renderItems(filteredItems);
+            });
+            paginationContainer.appendChild(button);
+          }
+        }
+
+        function renderSummaryItems(items) {
+          const container = document.getElementById('summaryItemsContainer');
+          container.innerHTML = '';
+
+          const summary = {};
+
+          items.forEach(item => {
+            const [year, month] = item.date.split('-');
+            const period = `${year}-${month}`;
+
+            if (!summary[period]) {
+              summary[period] = {
+                amount: 0,
+                currency: item.currency
+              };
+            }
+
+            const price = parseFloat(item.price);
+            summary[period].amount += price;
+          });
+
+          Object.keys(summary).forEach(period => {
+            const summaryItem = document.createElement('div');
+            summaryItem.className = 'sum_period__item';
+
+            const date = document.createElement('div');
+            date.className = 'date-low';
+            date.textContent = period;
+            summaryItem.appendChild(date);
+
+            const amount = document.createElement('div');
+            amount.className = 'amount';
+            amount.textContent = summary[period].amount.toFixed(2);
+            summaryItem.appendChild(amount);
+
+            const currency = document.createElement('div');
+            currency.className = 'currency';
+            currency.textContent = summary[period].currency;
+            summaryItem.appendChild(currency);
+
+            container.appendChild(summaryItem);
+          });
+        }
+
+        function updateTotalAmount(items) {
+          const totalAmountElement = document.getElementById('totalAmount');
+          const totalAmount = items.reduce((sum, item) => {
+          const price = parseFloat(item.price);
+            return sum + price;
+          }, 0);
+          totalAmountElement.textContent = `Total: ${totalAmount.toFixed(2)} PLN`;
+        }
+
+        function filterItems(category, startDate, endDate, searchName) {
+          filteredItems = items;
+
+          if (category !== 'all') {
+            filteredItems = filteredItems.filter(item => item.category === category);
+          }
+
+          if (startDate && endDate) {
+            filteredItems = filteredItems.filter(item => {
+              const itemDate = new Date(item.date);
+              return itemDate >= new Date(startDate) && itemDate <= new Date(endDate);
+            });
+          }
+
+          if (searchName) {
+            const trimmedSearchName = searchName.trim();
+            filteredItems = filteredItems.filter(item =>
+              item.name.toLowerCase().includes(trimmedSearchName.toLowerCase())
+            );
+          }
+
+          currentPage = 1;
+          renderItems(filteredItems);
+          updateTotalAmount(filteredItems);
+          renderSummaryItems(filteredItems);
+        }
+
+        function updateTotalAmount(items) {
+          const totalAmountElement = document.getElementById('totalAmount');
+          const totalAmount = items.reduce((sum, item) => {
+            const price = parseFloat(item.price);
+              return sum + price;
+          }, 0);
+          totalAmountElement.textContent = `Total: ${totalAmount.toFixed(2)} PLN`;
+        }
+
+        const filterForm = document.getElementById('filterForm');
+        const categorySelect = document.getElementById('category');
+        const startDateInput = document.querySelector('input[type="date"][placeholder="Start Date"]');
+        const endDateInput = document.querySelector('input[type="date"][placeholder="End Date"]');
+        const searchNameInput = document.querySelector('input[placeholder="Specify your search"]');
+
+        const filterButton = document.getElementById('filterButton');
+        filterButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedCategory = categorySelect.value;
+          const startDate = startDateInput.value;
+          const endDate = endDateInput.value;
+          const searchName = searchNameInput.value;
+          filterItems(selectedCategory, startDate, endDate, searchName);
+        });
+
+        const categorySums = {};
+
+        items.forEach(item => {
+          const category = item.category;
+          const price = parseFloat(item.price.split(' ')[0]);
+          if (categorySums[category]) {
+            categorySums[category] += price;
+          } else {
+            categorySums[category] = price;
+          }
+        });
+
+        const container = document.getElementById('summaryItemsContainer-1');
+        for (const category in categorySums) {
+          const sumCategoryItem = document.createElement('div');
+          sumCategoryItem.className = 'sum_category__item';
+
+          const type = document.createElement('div');
+          type.className = 'type';
+          type.textContent = category.toUpperCase();
+          
+          const amount = document.createElement('div');
+          amount.className = 'amount';
+          amount.textContent = categorySums[category];
+          
+          const currency = document.createElement('div');
+          currency.className = 'currency';
+          currency.textContent = 'PLN';
+          
+          sumCategoryItem.appendChild(type);
+          sumCategoryItem.appendChild(amount);
+          sumCategoryItem.appendChild(currency);
+          
+          container.appendChild(sumCategoryItem);
+        }
+
+        renderItems(filteredItems);
+        updateTotalAmount(items);
+        renderSummaryItems(items);
+      </script>
+    </body>
+</html>
