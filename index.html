@@ -630,6 +630,16 @@
             button.style.color = '#f2f2f2';
             button.style.borderRadius = '4px';
 
+            button.addEventListener('mouseover', () => {
+              button.style.backgroundColor = '#FF331F';
+              button.style.color = '#212121';
+            });
+
+            button.addEventListener('mouseout', () => {
+              button.style.backgroundColor = 'transparent';
+              button.style.color = '#ffffff';
+            });
+
             button.addEventListener('click', () => {
               currentPage = i;
               renderItems(filteredItems);
