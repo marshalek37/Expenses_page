@@ -20,8 +20,9 @@
         flex-direction: column;
         justify-content: center;
         font-family: "Catamaran", sans-serif;
-        background-color: #f2f2f2;
+        background-color: #212121;
         margin: 0 1rem;
+        color: #f2f2f2;
 
         @media (max-width: 380px) {
           transform: scale(0.9)
@@ -53,7 +54,7 @@
 
       a {
         text-decoration: none;
-        color: #00ddc2;
+        color: #FF331F;
         font-weight: 800;
         font-size: 0.8rem;
         text-shadow: 0;
@@ -90,7 +91,7 @@
         justify-content: center;
         height: 200px;
         width: 200px;
-        background-color: #f2f2f2;
+        background-color: transparent;
         margin: 20px 20px 20px 0;
         border: 1px solid #9a9a9a;
         transition: background .3s ease;
@@ -98,13 +99,13 @@
       }
 
       .expense__item:hover {
-        background: #00ddc2;
-        border: 1px solid rgba(0,221,194,.77);
-        box-shadow: 7px 7px 65px 1px rgba(0,221,194,.77);
+        background: #FF331F;
+        border: 1px solid #ab1f12;
+        box-shadow: 7px 7px 65px 1px #ab1f12;
       }
 
       .expense__item:hover .name {
-        color: #f2f2f2;
+        color: #212121;
       }
 
       .expense__item:hover .date {
@@ -121,11 +122,11 @@
       }
 
       .category {
-        color: #7a61fa;
+        color: #5432ff;
       }
       
       .category-1 {
-        color: #ef5ca3;
+        color: #e7bc21;
       }
 
       .name {
@@ -194,10 +195,15 @@
         border: 1px solid #9a9a9a;
         font-weight: 500;
         line-height: 14px;
+        color: #f2f2f2;
       }
 
       .form input:focus-visible {
-        outline: 2px solid #00ddc2;
+        outline: 2px solid #FF331F;
+      }
+
+      .date-input::-webkit-calendar-picker-indicator {
+        color: #f2f2f2;
       }
 
       .range {
@@ -224,8 +230,9 @@
         font-size: 1rem;
         font-weight: 500;
         text-align: center;
-        background-color: #00ddc2;
+        background-color: #FF331F;
         border: 1px solid #9a9a9a;
+        color: #f2f2f2;
         height: 30px;
         transition: background .3s ease;
         width: 100%;
@@ -236,8 +243,8 @@
       }
 
       .button:hover {
-        background-color: #f2f2f2;
-        color: #00ddc2;
+        background-color: transparent;
+        color: #FF331F;
       }
 
       .button__wrapper {
@@ -253,6 +260,7 @@
         background: transparent;
         margin-top: 1px;
         height: 23.5px;
+        color: #f2f2f2;
       }
 
       .search {
@@ -615,6 +623,7 @@
             button.style.border = '1px solid #9a9a9a';
             button.style.backgroundColor = 'transparent';
             button.style.cursor = 'pointer';
+            button.style.color = '#f2f2f2';
 
             button.addEventListener('click', () => {
               currentPage = i;
